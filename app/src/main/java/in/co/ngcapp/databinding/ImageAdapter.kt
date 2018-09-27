@@ -1,6 +1,5 @@
 package `in`.co.ngcapp.databinding
 
-import `in`.co.ngcapp.databinding.R.id.thumbnail
 import `in`.co.ngcapp.databinding.databinding.ImageAdapterBinding
 import android.content.Context
 import android.databinding.DataBindingUtil
@@ -10,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 
 class ImageAdapter(var userList:ArrayList<User>,var mContext:Context) : RecyclerView.Adapter<ImageAdapter.Clickevents>() {
 
@@ -27,15 +25,16 @@ class ImageAdapter(var userList:ArrayList<User>,var mContext:Context) : Recycler
     }
 
     override fun onBindViewHolder(holder: ImageAdapter.Clickevents, position: Int) {
-        holder.getData(userList[position])
+        holder.getData(userList[position],mContext)
     }
 
     class Clickevents(var imageBinding:ImageAdapterBinding) : RecyclerView.ViewHolder(imageBinding.root)  {
 
-        fun getData(userList:User){
+        fun getData(userList:User,xContext:Context){
 
-            imageBinding.(userList.imagesUrl)
 
+            Glide.with(xContext.applicationContext).load(userList.imagesUrl).into(imageBinding.thumbnail)
+            imageBinding.setUser(userList);
         }
     }
 
