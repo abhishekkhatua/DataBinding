@@ -5,17 +5,15 @@ import android.content.Context
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import com.bumptech.glide.Glide
 
-class ImageAdapter(var userList:ArrayList<User>,var mContext:Context) : RecyclerView.Adapter<ImageAdapter.Clickevents>() {
+internal class ImageAdapter(private var userList:ArrayList<User>, var mContext:Context) : RecyclerView.Adapter<ImageAdapter.Clickevents>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageAdapter.Clickevents {
         val layoutInflater = LayoutInflater.from(parent.context)
-        var binding : ImageAdapterBinding = DataBindingUtil.inflate(layoutInflater, R.layout.image_adapter, parent, false)
+        val binding : ImageAdapterBinding = DataBindingUtil.inflate(layoutInflater, R.layout.image_adapter, parent, false)
 
         return  Clickevents(binding)
     }
@@ -28,13 +26,11 @@ class ImageAdapter(var userList:ArrayList<User>,var mContext:Context) : Recycler
         holder.getData(userList[position],mContext)
     }
 
-    class Clickevents(var imageBinding:ImageAdapterBinding) : RecyclerView.ViewHolder(imageBinding.root)  {
+    class Clickevents(private var imageBinding:ImageAdapterBinding) : RecyclerView.ViewHolder(imageBinding.root)  {
 
         fun getData(userList:User,xContext:Context){
-
-
             Glide.with(xContext.applicationContext).load(userList.imagesUrl).into(imageBinding.thumbnail)
-            imageBinding.setUser(userList);
+            imageBinding.user = userList
         }
     }
 
